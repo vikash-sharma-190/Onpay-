@@ -6,6 +6,8 @@
 #include<unistd.h>
 #include<fstream>
 #include<ctime>
+#include<bits/stdc++.h>
+#include<stdio.h>
 using namespace std;
 
 char opt;
@@ -30,6 +32,9 @@ void gotoxy(int x, int y)
  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
+
+
+
 int datetest(string d){
 	if(d.find('/')>=1&&d.rfind('/')>=3&&d.find('/')<=2&&d.rfind('/')<=6){
 		string a=d.substr(0,2);
@@ -44,17 +49,18 @@ int datetest(string d){
 			}
 			else{
 				cout<<"Invalid Month."<<endl;
-				getch();
+			getch();
 			}
 		}
 		else{
 				cout<<"Invalid Date."<<endl;
-				getch();
+			getch();
 			}
 	}
 	else {
 		cout<<"Invalid Format."<<endl;
-		getch();
+					getch();
+
 	}
 }
 
@@ -141,7 +147,7 @@ class shop{
 			i++;
 			if(i==n){
 			cout<<"Shop ID not found.";
-			getch();
+						getch();
 			}
 			return 0;
 		}
@@ -369,7 +375,8 @@ class pvr{
 					cin>>slots[i];
 					if(slots[i]>6||slots[i]<0){
 						cout<<"You have entered wrong slot no."<<endl<<"Press any key to continue and re-enter the slot...";
-						getch();
+									getch();
+
 						slots[i]=0;
 						i--;
 					}
@@ -1075,24 +1082,43 @@ void shoprent(int d){
 }
 
 void shopdetail(){
-	char i;
+	
+	char i;	
 	ifstream in("shop.bin",ios::binary);
-	shop d;
+/*	shop d;
 	in.seekg(0,ios::end);
 	int len=in.tellg();
 	int n=len/sizeof(d);
 	shop s[n];
 	in.seekg(0,ios::beg);
+*/	
+	if(in){
+		shop d;
+		in.seekg(0,ios::end);
+		int len=in.tellg();
+		int n=len/sizeof(d);
+		in.seekg(0,ios::beg);
+		shop e[n];
+		while(in.read((char *)&e[i],sizeof(e[i]))){
+			e[i].output();
+			i++;
+		}
+		in.close();
+	
+	/*
 	if(in){
 		while(in.read((char *)&s[i],sizeof(s[i]))){
 			s[i].output();
 			i++;
 		}
 		in.close();
+		
+		*/
+			
 		cout<<endl<<"1. Add    2. Update    3. Delete    4. Back"<<endl;
 		fflush(stdin);
-		i=getch();
-		switch(i){
+		int k=getch();
+		switch(k){
 			case '1': addshop();
 					break;
 			case '2': updateshop();
@@ -1104,6 +1130,10 @@ void shopdetail(){
 			default : shops();
 		}
 	}
+	
+	
+	
+
 	else {
 		cout<<"Nothing to show... Database doesn't exist."<<endl<<"Creating Database...."<<endl<<"Press any key to continue.";
 		ofstream out("shop.bin",ios::binary);
@@ -1125,7 +1155,9 @@ void shops(){
 	cout<<"Total no. of Shops :- 50"<<endl;
 	cout<<"Shops Occupied :- "<<n<<endl;
 	cout<<"Shops Vacant :- "<<50-n<<endl<<endl;
+
 	shopdetail();
+
 	}
 	
 void addevent(){
@@ -2148,6 +2180,8 @@ void setting(){
 void mainmenu(){
 	system("color 1f");
 	system("cls");
+	int i=0,j=0;
+	/*
 	int d,m,y,t,j=0,i=0;
  	time_t td = time(0);
  	struct tm * now = localtime( & td );
@@ -2177,11 +2211,12 @@ void mainmenu(){
 		cout<<"Title of Movie             Audi"<<endl;
 		curshow(t);
 	}
-	if(s.show[2]==0){
+	if(s.show[2]==1){
 		j=8;
 	}
+	*/
  	gotoxy(97,28);
- 	cout <<"Date: " <<d <<"/" <<m <<"/" <<y ;
+// 	cout <<"Date: " <<d <<"/" <<m <<"/" <<y ;
 	gotoxy(44-i,13-j);
 	cout<<"||========================||";
 	gotoxy(44-i,14-j);
@@ -2289,9 +2324,8 @@ void loginscreen(){
 	if(check==1)
 	{
 		cout<<endl<<endl<<endl<<endl<<endl<<"                                                 Login Succesfull...";
-		sleep(1);
-		cout<<endl<<"                                               Press any key to continue.";
-		getch();
+		sleep(1);		cout<<endl<<"                                               Press any key to continue.";
+	getch();
 		mainmenu();
 	}
 	else 
@@ -2299,16 +2333,16 @@ void loginscreen(){
 		cout<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<"                                                 Login Unsuccesfull..."<<endl;
 		cout<<"                                               Please check your credentials."<<endl;
 		cout<<"                                               Press any key to try again.";
-		getch();
+		cin.get();
 		loginscreen();
 	}
 }
 
 
 int main(){
-	system("color 0a");
-	cout<<endl<<endl<<endl<<endl<<endl<<"                                       Welcome to Shopping Mall Administrator"<<endl<<endl<<"                                                     Loading....";
-	cout<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<"                                                                                         Made By Aman Singh.";
+	system("color 0b");
+	cout<<endl<<endl<<endl<<endl<<endl<<"                                       Welcome to Shopping Mall Administrator "<<endl<<endl<<"                                                     Loading....";
+	cout<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<"                                                                                         Made By vikash vishwakarma.";
 	sleep(4);
 	loaddata();
 	loginscreen();
